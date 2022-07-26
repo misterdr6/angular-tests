@@ -13,19 +13,18 @@ jobs:
   build:
 
     runs-on: windows-latest
-
-    strategy:
-      matrix:
-        node-version: [12.x, 14.x, 16.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+      - name: Fetch Repo Information
+        uses: actions/checkout@v3
+      - name: Set up node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "12.x"
+      - name: Install Yarn
+        run: npm install -g yarn
+      - name: Install dependencies
+        run: yarn install --production=false --frozen-lockfile --ignore-engines
+      - name: Build
+        run: yarn build
+      - name: Test
+        run: yarn test
