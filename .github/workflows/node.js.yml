@@ -23,8 +23,6 @@ jobs:
       - name: Install Yarn
         run: npm install -g yarn
       - name: Install dependencies
-        run: yarn install --production=false --frozen-lockfile --ignore-engines
-      - name: Build
-        run: yarn build
+        run: yarn install
       - name: Test
         run: yarn test
